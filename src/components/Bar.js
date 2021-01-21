@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
     bar: {
-        width: '750px',
+        // width: '750px',
+        width: 'inherit',
         height: '25px',
         backgroundColor: '#dad9d9',
         margin: '0 auto'
@@ -28,17 +29,17 @@ export const Bar = () => {
     return (
         <div className={classes.bar} style={{ borderTopLeftRadius: '5px', borderTopRightRadius: '5px' }}>
             <div className={classes.button}
-                style={{ backgroundColor: '#e94b35', left: '-47%', bottom: '-20%', fontSize: '8pt' }} // 8 is the perfect vertical font size
+                style={{ backgroundColor: '#ff605c', left: '-47%', bottom: '-20%', fontSize: '8pt' }} // 8 is the perfect vertical font size
                 onMouseEnter={() => setShowExit(true)}
                 onMouseLeave={() => setShowExit(false)}
             > {showExit ? '✕' : ''} </div>
             <div className={classes.button}
-                style={{ backgroundColor: '#f0f000', left: '-44%', bottom: '40%', fontSize: '7.5pt' }}
+                style={{ backgroundColor: '#ffbd44', left: '-44%', bottom: '40%', fontSize: '7.5pt' }}
                 onMouseEnter={() => setShowMin(true)}
                 onMouseLeave={() => setShowMin(false)}
             > {showMin ? '-' : ''} </div>
             <div className={classes.button}
-                style={{ backgroundColor: '#1aaf5c', left: '-41%', bottom: '99%', fontSize: '8pt' }}
+                style={{ backgroundColor: '#00ca4e', left: '-41%', bottom: '99%', fontSize: '8pt' }}
                 onMouseEnter={() => setShowMax(true)}
                 onMouseLeave={() => setShowMax(false)}
             > {showMax ? '+' : ''}</div>

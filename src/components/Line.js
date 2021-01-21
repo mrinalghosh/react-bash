@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -17,10 +17,6 @@ const Line = ({ handleEnterCommand }) => {
     const [result, setResult] = useState(''); // live input 
     const [entered, setEntered] = useState(false); // lock on submission
 
-    useEffect(() => {
-        console.log('LINE CREATED')
-    }, []);
-
     return (
         <form onSubmit={(e) => {
             e.preventDefault();
@@ -38,6 +34,7 @@ const Line = ({ handleEnterCommand }) => {
                     disabled={entered}
                     autoFocus
                     style={{
+                        width: '700px',
                         background: 'transparent',
                         outline: 'none',
                         border: 'none',
@@ -60,8 +57,6 @@ const Line = ({ handleEnterCommand }) => {
                     <br />
                 </h6>
             }
-
-
         </form>
     )
 }

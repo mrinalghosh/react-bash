@@ -32,7 +32,7 @@ function App() {
           </Switch>
         </Router>
 
-        <form onSubmit={(e) => { e.preventDefault(); setCommand(text); }}>
+        {/* <form onSubmit={(e) => { e.preventDefault(); setCommand(text); }}>
           <Input
             spellCheck={false}
             placeholder='cd ...'
@@ -42,7 +42,7 @@ function App() {
         </form>
 
         <h3 style={{ color: 'white' }}>{text}</h3>
-        <h3 style={{ color: 'lightsteelblue' }}>{`temp@ghosh:~$ ${command}`}</h3>
+        <h3 style={{ color: 'lightsteelblue' }}>{`temp@ghosh:~$ ${command}`}</h3> */}
 
       </div>
     </MuiThemeProvider>
