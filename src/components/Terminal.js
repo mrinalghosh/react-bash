@@ -8,7 +8,7 @@ const useStyles = makeStyles({
     body: {
         backgroundColor: 'white',
         minHeight: '400px',
-        height: '300px', // this works but is not a good way - get parent height to cap the height before scrolling begins
+        height: '400px', // this works but is not a good way - get parent height to cap the height before scrolling begins
         // maxHeight: '100%',
         borderBottomLeftRadius: '5px',
         borderBottomRightRadius: '5px',
@@ -18,10 +18,6 @@ const useStyles = makeStyles({
         justifyContent: 'flex-start',
         flexDirection: 'column',
         overflowY: 'scroll',
-        // ::-webkit-scrollbar { // this would work but how do i use it?
-        //     width: 0px;
-        //     background: transparent;
-        // }
     }
 })
 
@@ -32,18 +28,28 @@ const Terminal = () => {
 
     const classes = useStyles();
 
-    const [termLines, setTermLines] = useState([0]);
+    const [currentDirectory, setCurrentDirectory] = useState('');
+    const [termLines, setTermLines] = useState([{ index: 0, directory: '' }]);
 
-    const handleEnterCommand = () => {
-        // don't need to handle overflow - just scroll
-        setTermLines([...termLines, termLines.length]);
+    const handleEnterCommand = (directory) => {
+        let lines = [...termLines, {
+            index: termLines.length,
+            // directory: termLines.slice(-1)[0].directory + directory
+            directory: directory
+        }];
+        setTermLines(lines);
+        console.log(lines);
     }
 
     return (
         <DraggableDiv>
             <Bar />
             <div className={classes.body}>
-                {termLines.map(() => <Line handleEnterCommand={handleEnterCommand} />)}
+                {termLines.map(() => <Line
+                    handleEnterCommand={handleEnterCommand}
+                    currentDirectory={currentDirectory}
+                    setCurrentDirectory={setCurrentDirectory}
+                />)}
             </div>
         </DraggableDiv>
     )
