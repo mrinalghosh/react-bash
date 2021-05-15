@@ -24,26 +24,32 @@ const Line = ({ handleEnterCommand, currentDirectory, setCurrentDirectory }) => 
 
         switch (args[0]) {
             case 'cd':
-                let dir;
-                if (args.length > 2) {
-                    return { err: true, dir: currentDirectory, show: true };
-                } else if (args.length === 2) { // remain in current directory
-                    if (args[1] === '.')
-                        return { err: false, dir: currentDirectory, show: false };
+                if (args.length > 2) { // two many arguments
+                    return { err: true, dir: currentDirectory, show: true }
 
-                    if (args[1] === '..') { // go up a level
+                } else if (args.length === 2) { // remain
+                    if (args[1] === '.')
+                        return { err: false, dir: currentDirectory, show: false }
+
+                    else if (args[1] === '~')  // go home
+                        setCurrentDirectory('')
+
+                    else if (args[1] === '..') { // up level
+                        /* TODO: deal with multiple jumps ../.. */
                         let temp = currentDirectory.split('/')
                         temp.pop(-1)
-                        dir = temp.join('/')
-                        setCurrentDirectory(dir)
-                        return { err: false, dir: dir, show: false };
+                        setCurrentDirectory(temp.join('/'))
                     }
 
-                    dir = currentDirectory + '/' + args[1] // go down a level
-                    setCurrentDirectory(dir)
-                    return { err: false, dir: dir, show: false }
-                } else {
+                    else {
+                        setCurrentDirectory(currentDirectory + '/' + args[1])
+                    }
+
                     return { err: false, dir: currentDirectory, show: false }
+
+                } else { // cd without argument
+                    /* TODO: error message for this */
+                    return { err: true, dir: currentDirectory, show: false }
                 }
             case 'ls':
             case 'touch':
@@ -52,30 +58,6 @@ const Line = ({ handleEnterCommand, currentDirectory, setCurrentDirectory }) => 
             default:
                 return params
         }
-
-        // if (args[0] === 'cd') {
-
-        // }
-        // else if (result.slice(0, 2) === 'cd' && result.length === 2) { // do nothing
-        //     setShowCommand(false)
-        // } else if (result.slice(0, 3) === 'ls ' || (result.slice(0, 2) === 'ls' && result.length === 2)) {
-        //     console.log('ls requested')
-        //     // setArgs(result.slice(3))
-        // } else if (result.slice(0, 4) === 'man ') {
-        //     console.log('man requested')
-        //     // setArgs(result.slice(4))
-        // } else if (result.slice(0, 4) === 'help') {
-        //     console.log('help requested')
-        //     setCommand('help - available commands\ncd\nls\nman\nhelp')
-        // } 
-        // else {
-        //     console.log('Command not recognized')
-        //     return {
-        //         cmd: '',
-        //         dir: currentDirectory,
-        //         show: false
-        //     }
-        // }
     }
 
     const classes = useStyles();
@@ -85,7 +67,7 @@ const Line = ({ handleEnterCommand, currentDirectory, setCurrentDirectory }) => 
     const [entered, setEntered] = useState(false); // lock input field on submission
     const [showCommand, setShowCommand] = useState(true);
     // const [args, setArgs] = useState('');
-    const [directory, setDirectory] = useState(''); // directory needs to be seen on the next line and every line after
+    // const [directory, setDirectory] = useState(''); // directory needs to be seen on the next line and every line after
 
     return (
         <form onSubmit={(e) => {
@@ -96,7 +78,7 @@ const Line = ({ handleEnterCommand, currentDirectory, setCurrentDirectory }) => 
             // console.log(show);
             err ? setCommand('zsh: command not found: ' + result) : setCommand(result);
             setShowCommand(show);
-            setDirectory(dir);
+            // setDirectory(dir);
             handleEnterCommand(dir);
         }}
         // onChange={() => {
