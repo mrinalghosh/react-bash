@@ -1,9 +1,25 @@
+
+/* TODO:
+1. fix directories not changing
+2. fix scrollbar not changing when resized
+3. add echo,... commands... - see implementation in react-console-emulator
+4. minimization
+5. closing
+6. icon to open again
+
+
+MINOR:
+fix spacing on left side of box
+*/
+
 import React, { useState } from 'react';
 import './App.css';
 import { MuiThemeProvider, Input } from '@material-ui/core';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { pageDirectory, theme } from './components/Utils';
 import Terminal from './components/Terminal'
+// import Terminal from 'react-console-emulator';
+
 
 const NotFound = () => <h1 style={{ color: 'white' }}>404</h1>; // THE CAPITAL LETTER MATTERS
 const NatoPage = (name) => <h1 style={{ color: 'white' }}>{name}</h1>;
@@ -31,22 +47,26 @@ function App() {
             </Route>
           </Switch>
         </Router>
-
-        {/* <form onSubmit={(e) => { e.preventDefault(); setCommand(text); }}>
-          <Input
-            spellCheck={false}
-            placeholder='cd ...'
-            style={{ color: 'white' }}
-            onChange={(e) => setText(e.target.value)}
-          />
-        </form>
-
-        <h3 style={{ color: 'white' }}>{text}</h3>
-        <h3 style={{ color: 'lightsteelblue' }}>{`temp@ghosh:~$ ${command}`}</h3> */}
-
       </div>
     </MuiThemeProvider>
   );
+
+  // const commands = {
+  //   echo: {
+  //     description: 'Echo a passed string.',
+  //     usage: 'echo <string>',
+  //     fn: (...args) => args.join(' ')
+  //   }
+  // }
+
+  // return (
+  //   <Terminal
+  //     commands={commands}
+  //     welcomeMessage={'Welcome to the React terminal!'}
+  //     promptLabel={'user@ghoshm:~$'}
+  //   />
+  // )
+
 }
 
 export default App;

@@ -66,30 +66,22 @@ const Line = ({ handleEnterCommand, currentDirectory, setCurrentDirectory }) => 
     const [result, setResult] = useState(''); // live input feed
     const [entered, setEntered] = useState(false); // lock input field on submission
     const [showCommand, setShowCommand] = useState(true);
-    // const [args, setArgs] = useState('');
-    // const [directory, setDirectory] = useState(''); // directory needs to be seen on the next line and every line after
 
     return (
         <form onSubmit={(e) => {
             e.preventDefault();
             setEntered(true);
             let { err, dir, show } = handleCommand(result);
-            // console.log(dir);
-            // console.log(show);
             err ? setCommand('zsh: command not found: ' + result) : setCommand(result);
             setShowCommand(show);
-            // setDirectory(dir);
             handleEnterCommand(dir);
-        }}
-        // onChange={() => {
-        //     handleCommand();
-        // }}
-        >
-            <div className={classes.text}>
+        }}>
+            <div className={classes.text} style={{ marginTop: '3px', marginLeft: '5px' }}>
                 {/* https://stackoverflow.com/questions/17054150/in-field-labels-dont-line-up-with-input-text */}
                 <label style={{
                     fontSize: '10pt',
-                    margin: 0
+                    margin: 0,
+                    marginRight: '5px'
                 }}>
                     user@ghosh:~{currentDirectory}$
                     {/* user@ghosh:~$ */}
@@ -118,6 +110,7 @@ const Line = ({ handleEnterCommand, currentDirectory, setCurrentDirectory }) => 
                         fontFamily: 'monospace',
                         fontSize: '10pt',
                         margin: 0,
+                        marginLeft: '5px',
                         fontWeight: 'normal',
                         textAlign: 'left'
                     }}>
