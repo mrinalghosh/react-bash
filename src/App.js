@@ -1,72 +1,63 @@
-
-/* TODO:
-1. fix directories not changing
-2. fix scrollbar not changing when resized
-3. add echo,... commands... - see implementation in react-console-emulator
-4. minimization
-5. closing
-6. icon to open again
-
-
-MINOR:
-fix spacing on left side of box
-*/
-
-import React, { useState } from 'react';
-import './App.css';
-import { MuiThemeProvider, Input } from '@material-ui/core';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import { pageDirectory, theme } from './components/Utils';
-import Terminal from './components/Terminal'
+// import React, { useState } from 'react';
+// // import './App.css';
+// // import { MuiThemeProvider, Input } from '@material-ui/core';
+// // import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+// // import { pageDirectory, theme } from './components/Utils';
 // import Terminal from 'react-console-emulator';
 
+// function App() {
+//   const commands = {
+//     echo: {
+//       description: 'Echo a passed string.',
+//       usage: 'echo <string>',
+//       fn: (...args) => args.join(' ')
+//     }
+//   }
 
-const NotFound = () => <h1 style={{ color: 'white' }}>404</h1>; // THE CAPITAL LETTER MATTERS
-const NatoPage = (name) => <h1 style={{ color: 'white' }}>{name}</h1>;
+//   return (
+//     <Terminal
+//       commands={commands}
+//       welcomeMessage={'Welcome to the React terminal!'}
+//       promptLabel={'user@ghoshm:~$'}
+//     />
+//   )
 
+// }
+
+// export default App;
+
+import React, { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme } from './components/theme';
+import { GlobalStyles } from './components/global';
+import Toggle from './components/Toggle'
+
+// The function that toggles between themes
 function App() {
-  const [command, setCommand] = useState('')
-  const [text, setText] = useState('')
+  const [theme, setTheme] = useState('light');
+  const toggleTheme = () => {
+    if (theme === 'light') {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
+  }
 
+  // Return the layout based on the current theme
   return (
-    <MuiThemeProvider theme={theme}>
-      <div className="App" style={{ overflow: 'hidden', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', alignItems: '', height: '100vh', flexDirection: 'column' }}>
-        <Router>
-          <Switch>
-            {/* Remove terminal from here once done testing */}
-            <Route exact path='/' component={Terminal} />
-            {
-              pageDirectory.map(({ name, path }, key) =>
-                <Route exact path={path} component={() => NatoPage(name)} key={key} />
-              )
-            }
-            <Route path='/terminal' component={Terminal} />
-            <Route path='*'>
-              <Redirect to='/not-found' />
-              <NotFound />
-            </Route>
-          </Switch>
-        </Router>
-      </div>
-    </MuiThemeProvider>
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      <>
+        <GlobalStyles />
+        {/* // Pass the toggle functionality to the button
+        <button onClick={toggleTheme}>Toggle theme</button>
+        <h1>It's a light theme!</h1>
+        <footer>
+        </footer> */}
+        <Toggle theme={theme} toggleTheme={toggleTheme} />
+        <h1>It's a {theme === 'light' ? 'light theme' : 'dark theme'}!</h1>
+      </>
+    </ThemeProvider>
   );
-
-  // const commands = {
-  //   echo: {
-  //     description: 'Echo a passed string.',
-  //     usage: 'echo <string>',
-  //     fn: (...args) => args.join(' ')
-  //   }
-  // }
-
-  // return (
-  //   <Terminal
-  //     commands={commands}
-  //     welcomeMessage={'Welcome to the React terminal!'}
-  //     promptLabel={'user@ghoshm:~$'}
-  //   />
-  // )
-
 }
 
 export default App;
